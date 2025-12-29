@@ -18,4 +18,3 @@ export const gameResultRepositoryMock = {
     return mockStore.getGameResultsBySession(sessionId)
   },
 }
-

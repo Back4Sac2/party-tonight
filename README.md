@@ -165,6 +165,7 @@ NEXT_PUBLIC_ACCESS_CODE=your_secret_code_123
 ```
 
 **접근 제어 코드 설정**:
+
 - `NEXT_PUBLIC_ACCESS_CODE`: 친구들에게만 공유할 입장 코드 (4~10자리 권장)
 - 이 코드를 모르면 앱에 접근할 수 없습니다
 - 프로덕션에서는 Vercel 환경 변수로 설정하세요

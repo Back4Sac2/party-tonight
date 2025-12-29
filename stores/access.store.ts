@@ -8,7 +8,7 @@ interface AccessState {
   revokeAccess: () => void
 }
 
-export const useAccessStore = create<AccessState>((set) => ({
+export const useAccessStore = create<AccessState>(set => ({
   isGranted: false,
   checkAccess: () => {
     const granted = hasAccess()
@@ -23,4 +23,3 @@ export const useAccessStore = create<AccessState>((set) => ({
     set({ isGranted: false })
   },
 }))
-

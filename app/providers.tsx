@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from '@/hooks/use-session'
 import { isMockMode } from '@/lib/config'
 import { initializeMockData } from '@/lib/mock-data'
-import { useAccessStore } from '@/stores'
+import { useAccessStore, useUserStore } from '@/stores'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -22,15 +22,24 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   // Mock 모드일 때 초기 데이터 설정
   useEffect(() => {
-    if (isMockMode && typeof window !== 'undefined') {
-      initializeMockData()
-      console.log('🎭 Mock mode enabled - Using in-memory data store')
+    if (typeof window !== 'undefined') {
+      if (isMockMode) {
+        initializeMockData()
+        console.log('🎭 Mock mode enabled - Using in-memory data store')
+      } else {
+        console.log('✅ Supabase mode enabled - Connected to database')
+        console.log(
+          '📍 Supabase URL:',
+          process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30) + '...'
+        )
+      }
     }
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
       <AccessInitializer />
+      <UserInitializer />
       <SessionInitializer />
       {children}
     </QueryClientProvider>
@@ -38,11 +47,21 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }
 
 function AccessInitializer() {
-  const checkAccess = useAccessStore((state) => state.checkAccess)
+  const checkAccess = useAccessStore(state => state.checkAccess)
 
   useEffect(() => {
     checkAccess()
   }, [checkAccess])
+
+  return null
+}
+
+function UserInitializer() {
+  const fetchUser = useUserStore(state => state.fetchUser)
+
+  useEffect(() => {
+    fetchUser()
+  }, [fetchUser])
 
   return null
 }

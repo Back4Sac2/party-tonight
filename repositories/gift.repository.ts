@@ -9,7 +9,8 @@ function getDb() {
       'Supabase client is not initialized. This should not happen in real mode.'
     )
   }
-  return supabase as ReturnType<typeof createClient<Database>>
+  // Supabase 타입 추론 이슈로 인해 any로 캐스팅
+  return supabase as any
 }
 
 export const giftRepository = {
@@ -40,7 +41,6 @@ export const giftRepository = {
     }
   ): Promise<Gift> {
     const db = getDb()
-    // @ts-expect-error - Supabase 타입 추론 이슈 (실제 Supabase 연결 시 해결됨)
     const { data, error } = await db
       .from('gifts')
       .insert({
@@ -64,7 +64,6 @@ export const giftRepository = {
     const db = getDb()
     const { data, error } = await db
       .from('gifts')
-      // @ts-expect-error - Supabase 타입 추론 이슈 (실제 Supabase 연결 시 해결됨)
       .update(updates)
       .eq('id', giftId)
       .select()
@@ -89,7 +88,6 @@ export const giftRepository = {
    */
   async addTag(giftId: GiftId, tagId: TagId): Promise<void> {
     const db = getDb()
-    // @ts-expect-error - Supabase 타입 추론 이슈
     const { error } = await db
       .from('gift_tags')
       .insert({ gift_id: giftId, tag_id: tagId })
@@ -132,7 +130,6 @@ export const giftRepository = {
     const db = getDb()
     const { data, error } = await db
       .from('gifts')
-      // @ts-expect-error - Supabase 타입 추론 이슈
       .update({
         is_claimed: true,
         claimed_by: winnerName,

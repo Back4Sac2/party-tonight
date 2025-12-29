@@ -36,7 +36,7 @@ class MockDataStore {
   // Gifts
   getGiftsBySession(sessionId: string): Gift[] {
     return Array.from(this.gifts.values()).filter(
-      (gift) => gift.session_id === sessionId
+      gift => gift.session_id === sessionId
     )
   }
 
@@ -101,14 +101,19 @@ class MockDataStore {
       .map(([giftId]) => giftId)
 
     return giftIds
-      .map((id) => this.gifts.get(id))
-      .filter((gift): gift is Gift => gift !== undefined && gift.session_id === sessionId && !gift.is_claimed)
+      .map(id => this.gifts.get(id))
+      .filter(
+        (gift): gift is Gift =>
+          gift !== undefined &&
+          gift.session_id === sessionId &&
+          !gift.is_claimed
+      )
   }
 
   // Tags
   getTagsBySession(sessionId: string): Tag[] {
     return Array.from(this.tags.values()).filter(
-      (tag) => tag.session_id === sessionId
+      tag => tag.session_id === sessionId
     )
   }
 
@@ -166,7 +171,11 @@ class MockDataStore {
   }
 
   // Game Results
-  createGameResult(sessionId: string, gameId: string, winnerName: string): GameResult {
+  createGameResult(
+    sessionId: string,
+    gameId: string,
+    winnerName: string
+  ): GameResult {
     const id = `result-${Date.now()}-${Math.random()}`
     const result: GameResult = {
       id,
@@ -181,7 +190,7 @@ class MockDataStore {
 
   getGameResultsBySession(sessionId: string): GameResult[] {
     return Array.from(this.gameResults.values()).filter(
-      (result) => result.session_id === sessionId
+      result => result.session_id === sessionId
     )
   }
 
@@ -202,19 +211,21 @@ export function initializeMockData() {
   mockStore.createGame({
     name: '가위바위보',
     description: '전통적인 가위바위보 게임',
-    rules: '1. 모두 동시에 가위, 바위, 보 중 하나를 낸다\n2. 승자가 결정될 때까지 반복한다\n3. 최종 승자가 우승자이다',
+    rules:
+      '1. 모두 동시에 가위, 바위, 보 중 하나를 낸다\n2. 승자가 결정될 때까지 반복한다\n3. 최종 승자가 우승자이다',
   })
 
   mockStore.createGame({
     name: '숫자 맞추기',
     description: '1부터 100까지 숫자 맞추기',
-    rules: '1. 한 사람이 1부터 100까지 숫자 중 하나를 생각한다\n2. 다른 사람들이 번갈아가며 숫자를 말한다\n3. 가장 가까운 사람이 우승자이다',
+    rules:
+      '1. 한 사람이 1부터 100까지 숫자 중 하나를 생각한다\n2. 다른 사람들이 번갈아가며 숫자를 말한다\n3. 가장 가까운 사람이 우승자이다',
   })
 
   mockStore.createGame({
     name: '퀴즈 대회',
     description: '상식 퀴즈 대회',
-    rules: '1. 문제를 하나씩 출제한다\n2. 가장 먼저 정답을 맞춘 사람이 우승자이다',
+    rules:
+      '1. 문제를 하나씩 출제한다\n2. 가장 먼저 정답을 맞춘 사람이 우승자이다',
   })
 }
-

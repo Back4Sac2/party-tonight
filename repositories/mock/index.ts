@@ -3,4 +3,3 @@ export { giftRepositoryMock } from './gift.repository.mock'
 export { tagRepositoryMock } from './tag.repository.mock'
 export { gameRepositoryMock } from './game.repository.mock'
 export { gameResultRepositoryMock } from './game-result.repository.mock'
-

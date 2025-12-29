@@ -5,9 +5,12 @@ import { createClient } from '@supabase/supabase-js'
 
 function getDb() {
   if (!supabase) {
-    throw new Error('Supabase client is not initialized. This should not happen in real mode.')
+    throw new Error(
+      'Supabase client is not initialized. This should not happen in real mode.'
+    )
   }
-  return supabase as ReturnType<typeof createClient<Database>>
+  // Supabase 타입 추론 이슈로 인해 any로 캐스팅
+  return supabase as any
 }
 
 export const sessionRepository = {
@@ -39,10 +42,11 @@ export const sessionRepository = {
 
     if (existing) {
       // last_active_at 업데이트
-      await db
+      const { error: updateError } = await db
         .from('sessions')
         .update({ last_active_at: new Date().toISOString() })
         .eq('id', sessionId)
+      if (updateError) throw updateError
       return existing as Session
     }
 
