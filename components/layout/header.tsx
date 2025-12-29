@@ -43,6 +43,11 @@ export function Header() {
                 가방
               </Button>
             </Link>
+            <Link href="/gacha">
+              <Button variant="ghost" size="sm">
+                🎲 가챠
+              </Button>
+            </Link>
             {isAdmin && (
               <Link href="/admin">
                 <Button variant="ghost" size="sm" className="text-blue-600">
