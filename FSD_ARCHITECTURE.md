@@ -64,25 +64,30 @@ party_tonight/
 ## 🏗️ 레이어 설명
 
 ### 1. **shared/** - 공통 레이어
+
 - 모든 레이어에서 사용 가능
 - 재사용 가능한 기본 UI 컴포넌트
 - 유틸리티 함수, 타입 정의
 
 ### 2. **entities/** - 엔티티 레이어
+
 - 비즈니스 엔티티 (Game, Gift, User 등)
 - 엔티티별 UI 컴포넌트
 - 엔티티별 비즈니스 로직
 
 ### 3. **features/** - 기능 레이어
+
 - 사용자가 수행하는 기능 단위
 - 독립적으로 동작하는 기능 컴포넌트
 - 예: 태그 선택, 게임 생성, 우승자 선택
 
 ### 4. **widgets/** - 위젯 레이어
+
 - 여러 features/entities를 조합한 복합 컴포넌트
 - 예: 게임 목록 (게임 카드 + 게임 관리 기능)
 
 ### 5. **app/** - 페이지 레이어
+
 - Next.js App Router 페이지
 - 위젯과 기능을 조합하여 페이지 구성
 - 최소한의 로직만 포함
@@ -98,10 +103,10 @@ export default function GamePage() {
   const { data: games } = useGames()
   const { data: users } = useUsersForSelection()
   const { data: tags } = useTags()
-  
+
   // 상태 관리
   const [selectedGame, setSelectedGame] = useState(null)
-  
+
   // 위젯과 기능 조합
   return (
     <>
@@ -117,6 +122,7 @@ export default function GamePage() {
 ## 🔄 Import 규칙
 
 ### FSD Import 규칙
+
 - **같은 레이어**: 자유롭게 import 가능
 - **상위 레이어**: 하위 레이어만 import 가능
 - **하위 레이어**: 상위 레이어 import 불가
@@ -134,15 +140,16 @@ shared (공통)
 ```
 
 ### 예시
+
 ```tsx
 // ✅ 올바른 import
 // features/game-create에서
-import { Button } from '@/shared/ui'           // shared import 가능
+import { Button } from '@/shared/ui' // shared import 가능
 import { TagSelect } from '@/features/tag-select' // 같은 레이어 import 가능
 
 // ❌ 잘못된 import
 // shared/ui에서
-import { GameCard } from '@/entities/game'      // 상위 레이어 import 불가
+import { GameCard } from '@/entities/game' // 상위 레이어 import 불가
 ```
 
 ## 🎯 주요 원칙
@@ -156,15 +163,18 @@ import { GameCard } from '@/entities/game'      // 상위 레이어 import 불�
 ## 📝 컴포넌트 분리 기준
 
 ### Features로 분리할 것
+
 - 사용자가 수행하는 특정 기능
 - 독립적으로 동작하는 기능
 - 여러 곳에서 재사용되는 기능
 
 ### Widgets로 분리할 것
+
 - 여러 features/entities를 조합한 복합 컴포넌트
 - 페이지의 큰 섹션을 담당하는 컴포넌트
 
 ### Entities로 분리할 것
+
 - 비즈니스 엔티티의 UI 표현
 - 엔티티별 공통 컴포넌트
 
@@ -175,4 +185,3 @@ import { GameCard } from '@/entities/game'      // 상위 레이어 import 불�
 3. **확장성**: 새로운 기능 추가가 용이
 4. **테스트**: 각 레이어별 독립적 테스트 가능
 5. **협업**: 명확한 구조로 팀 협업 용이
-

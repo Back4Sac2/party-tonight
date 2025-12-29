@@ -60,7 +60,6 @@ export async function createWinner(
   }
 
   // 우승자 등록
-  // @ts-expect-error - Supabase 타입 추론 이슈
   const { data: winner, error: winnerError } = await supabaseServer
     .from('winners')
     .insert({

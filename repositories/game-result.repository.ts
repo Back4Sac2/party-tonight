@@ -9,7 +9,8 @@ function getDb() {
       'Supabase client is not initialized. This should not happen in real mode.'
     )
   }
-  return supabase as ReturnType<typeof createClient<Database>>
+  // Supabase 타입 추론 이슈로 인해 any로 캐스팅
+  return supabase as any
 }
 
 export const gameResultRepository = {
@@ -22,7 +23,6 @@ export const gameResultRepository = {
     winnerName: string
   ): Promise<GameResult> {
     const db = getDb()
-    // @ts-expect-error - Supabase 타입 추론 이슈
     const { data, error } = await db
       .from('game_results')
       .insert({
@@ -42,7 +42,6 @@ export const gameResultRepository = {
    */
   async selectTag(gameResultId: string, tagId: TagId): Promise<void> {
     const db = getDb()
-    // @ts-expect-error - Supabase 타입 추론 이슈
     const { error } = await db.from('tag_selections').insert({
       game_result_id: gameResultId,
       tag_id: tagId,

@@ -21,5 +21,5 @@ export async function getTags(): Promise<string[]> {
         tag && typeof tag === 'string' && tag.trim() !== ''
     )
 
-  return Array.from(new Set(validTags)).sort()
+  return Array.from(new Set(validTags)).sort() as string[]
 }

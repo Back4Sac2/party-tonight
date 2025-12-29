@@ -79,7 +79,6 @@ export async function createGift(
     throw new Error('태그와 선물명은 필수입니다.')
   }
 
-  // @ts-expect-error - Supabase 타입 추론 이슈
   const { data, error } = await supabaseServer
     .from('gifts')
     .insert({

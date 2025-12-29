@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
       if (!adminUser) {
         // 관리자 유저 생성
         const passwordHash = hashPassword(MASTER_KEY)
-        // @ts-expect-error - Supabase 타입 추론 이슈
         const { data: newAdmin, error: createError } = await supabaseServer
           .from('users')
           .insert({
@@ -100,7 +99,6 @@ export async function POST(request: NextRequest) {
     } else {
       // 신규 유저 등록
       const passwordHash = hashPassword(password)
-      // @ts-expect-error - Supabase 타입 추론 이슈
       const { data: newUser, error: createError } = await supabaseServer
         .from('users')
         .insert({

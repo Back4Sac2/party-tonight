@@ -56,13 +56,13 @@ export default function AdminPage() {
 
       <div className="flex gap-2 mb-6">
         <Button
-          variant={activeTab === 'users' ? 'default' : 'outline'}
+          variant={activeTab === 'users' ? 'primary' : 'outline'}
           onClick={() => setActiveTab('users')}
         >
           유저 목록
         </Button>
         <Button
-          variant={activeTab === 'gifts' ? 'default' : 'outline'}
+          variant={activeTab === 'gifts' ? 'primary' : 'outline'}
           onClick={() => setActiveTab('gifts')}
         >
           모든 선물

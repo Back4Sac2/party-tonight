@@ -54,7 +54,6 @@ export async function createGame(
     throw new Error('게임명과 설명은 필수입니다.')
   }
 
-  // @ts-expect-error - Supabase 타입 추론 이슈
   const { data, error } = await supabaseServer
     .from('games')
     .insert({

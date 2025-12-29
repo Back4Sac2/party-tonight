@@ -13,7 +13,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables')
 }
 
+// Supabase 타입 추론 이슈로 인해 any로 캐스팅
 export const supabaseServer = createClient<Database>(
   supabaseUrl,
   supabaseAnonKey
-)
+) as any

@@ -107,10 +107,10 @@ export default function BagPage() {
                       </div>
                     )}
                     <Button
-                      variant="destructive"
+                      variant="outline"
                       size="sm"
                       onClick={() => handleDeleteGift(gift.id)}
-                      className="w-full"
+                      className="w-full text-red-600 hover:text-red-700 hover:border-red-600"
                     >
                       삭제
                     </Button>
