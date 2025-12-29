@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const ACCESS_COOKIE_NAME = 'access_granted'
-const ACCESS_COOKIE_VALUE = 'true'
 const ENTER_PATH = '/enter'
 
 // 보호하지 않을 경로들
@@ -27,31 +25,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // 쿠키 확인
-  const accessGranted = request.cookies.get(ACCESS_COOKIE_NAME)?.value
+  // 쿠키 확인 (userId)
+  const userId = request.cookies.get('party_tonight_user_id')?.value
 
-  // 접근 권한이 없으면 /enter로 리다이렉트
-  if (accessGranted !== ACCESS_COOKIE_VALUE) {
+  // 로그인하지 않았으면 /enter로 리다이렉트
+  if (!userId) {
     const enterUrl = new URL(ENTER_PATH, request.url)
-    // 원래 가려던 URL을 쿼리 파라미터로 저장 (리다이렉트 후 복귀용)
     enterUrl.searchParams.set('redirect', pathname)
     return NextResponse.redirect(enterUrl)
   }
 
-  // 접근 권한이 있으면 통과
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }
-

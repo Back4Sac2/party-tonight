@@ -19,4 +19,3 @@ export const sessionRepositoryMock = {
     mockStore.updateSessionLastActive(sessionId)
   },
 }
-

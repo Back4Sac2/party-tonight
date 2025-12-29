@@ -5,7 +5,9 @@ import { createClient } from '@supabase/supabase-js'
 
 function getDb() {
   if (!supabase) {
-    throw new Error('Supabase client is not initialized. This should not happen in real mode.')
+    throw new Error(
+      'Supabase client is not initialized. This should not happen in real mode.'
+    )
   }
   return supabase as ReturnType<typeof createClient<Database>>
 }
