@@ -31,3 +31,4 @@ export const tagRepositoryMock = {
     mockStore.deleteTag(tagId)
   },
 }
+

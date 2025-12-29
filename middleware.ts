@@ -25,11 +25,15 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // 쿠키 확인 (userId)
+  // 1단계: 접근 코드 확인 (access_granted 쿠키)
+  const accessGranted = request.cookies.get('access_granted')?.value
+
+  // 2단계: 사용자 로그인 확인 (userId 쿠키)
   const userId = request.cookies.get('party_tonight_user_id')?.value
 
-  // 로그인하지 않았으면 /enter로 리다이렉트
-  if (!userId) {
+  // 접근 코드나 로그인이 없으면 /enter로 리다이렉트
+  // /enter 페이지에서 접근 코드와 로그인을 모두 처리
+  if (!accessGranted || !userId) {
     const enterUrl = new URL(ENTER_PATH, request.url)
     enterUrl.searchParams.set('redirect', pathname)
     return NextResponse.redirect(enterUrl)

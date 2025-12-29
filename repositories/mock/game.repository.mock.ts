@@ -10,3 +10,4 @@ export const gameRepositoryMock = {
     return mockStore.getGame(gameId) || null
   },
 }
+

@@ -56,3 +56,4 @@ export const giftRepositoryMock = {
     return mockStore.getGiftsByTag(sessionId, tagId)
   },
 }
+
