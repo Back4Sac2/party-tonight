@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, Suspense } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
   Button,
   Input,
@@ -11,9 +11,12 @@ import {
   CardTitle,
   CardDescription,
 } from '@/shared/ui'
+import { setAccessCookie } from '@/lib/access'
 
 function EnterPageContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const [accessCode, setAccessCode] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -25,6 +28,25 @@ function EnterPageContent() {
     setIsSubmitting(true)
 
     try {
+      // 1단계: 접근 코드 검증
+      const accessCodeEnv = process.env.NEXT_PUBLIC_ACCESS_CODE
+
+      if (!accessCodeEnv) {
+        setError('접근 코드가 설정되지 않았습니다.')
+        setIsSubmitting(false)
+        return
+      }
+
+      if (accessCode !== accessCodeEnv) {
+        setError('접근 코드가 올바르지 않습니다.')
+        setIsSubmitting(false)
+        return
+      }
+
+      // 접근 코드 통과 - 쿠키 설정
+      setAccessCookie()
+
+      // 2단계: 로그인 처리
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,8 +61,9 @@ function EnterPageContent() {
         return
       }
 
-      // 로그인 성공 시 홈으로 이동
-      router.push('/gifts')
+      // 로그인 성공 시 원래 가려던 페이지 또는 홈으로 이동
+      const redirect = searchParams.get('redirect') || '/gifts'
+      router.push(redirect)
       router.refresh()
     } catch (error) {
       setError('서버 오류가 발생했습니다.')
@@ -54,15 +77,38 @@ function EnterPageContent() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl mb-2">🎉 Party Tonight</CardTitle>
           <CardDescription>
-            유저명과 비밀번호를 입력하세요
+            접근 코드, 유저명, 비밀번호를 입력하세요
             <br />
             <span className="text-xs text-gray-400">
-              (없으면 자동으로 생성됩니다)
+              (유저명과 비밀번호는 없으면 자동으로 생성됩니다)
             </span>
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="accessCode"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                접근 코드
+              </label>
+              <Input
+                id="accessCode"
+                type="text"
+                value={accessCode}
+                onChange={e => {
+                  setAccessCode(e.target.value)
+                  setError('')
+                }}
+                placeholder="접근 코드 입력"
+                required
+                disabled={isSubmitting}
+                autoFocus
+                maxLength={20}
+              />
+            </div>
+
             <div>
               <label
                 htmlFor="name"
@@ -81,7 +127,6 @@ function EnterPageContent() {
                 placeholder="유저명 입력"
                 required
                 disabled={isSubmitting}
-                autoFocus
               />
             </div>
 
@@ -104,9 +149,6 @@ function EnterPageContent() {
                 required
                 disabled={isSubmitting}
               />
-              <p className="text-xs text-gray-500 mt-1">
-                관리자는 환경변수 MASTER_KEY를 입력하세요
-              </p>
             </div>
 
             {error && (
@@ -118,7 +160,13 @@ function EnterPageContent() {
             <Button
               type="submit"
               className="w-full"
-              disabled={isSubmitting || !name.trim() || !password.trim()}
+              disabled={
+                isSubmitting ||
+                !accessCode.trim() ||
+                !name.trim() ||
+                !password.trim()
+              }
+              variant="primary"
             >
               {isSubmitting ? '처리 중...' : '입장하기'}
             </Button>
