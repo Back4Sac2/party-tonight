@@ -38,7 +38,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }
 
 function AccessInitializer() {
-  const checkAccess = useAccessStore((state) => state.checkAccess)
+  const checkAccess = useAccessStore(state => state.checkAccess)
 
   useEffect(() => {
     checkAccess()
