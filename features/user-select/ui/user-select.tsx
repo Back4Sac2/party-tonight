@@ -28,6 +28,7 @@ export function UserSelect({
         {users.map(user => (
           <Button
             key={user.id}
+            type="button"
             variant={selectedUserId === user.id ? 'primary' : 'outline'}
             size="sm"
             onClick={() => onSelect(user.id)}
