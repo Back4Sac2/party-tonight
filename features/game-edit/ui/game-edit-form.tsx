@@ -50,7 +50,7 @@ export function GameEditForm({ game, onSuccess, onCancel }: GameEditFormProps) {
   }
 
   return (
-    <Card>
+    <Card className="p-3 mb-2">
       <CardHeader>
         <CardTitle>게임 수정</CardTitle>
       </CardHeader>

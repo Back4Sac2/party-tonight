@@ -15,14 +15,12 @@ import { useBagGifts, useOpenGift } from '@/hooks/queries/v2/use-bag'
 import { useDeleteGift } from '@/hooks/queries/v2/use-gifts'
 
 export default function BagPage() {
-  const { user, fetchUser } = useUserStore()
+  const { user } = useUserStore()
   const { data: gifts = [], isLoading } = useBagGifts()
   const openGiftMutation = useOpenGift()
   const deleteGiftMutation = useDeleteGift()
 
-  useEffect(() => {
-    fetchUser()
-  }, [fetchUser])
+  // UserInitializer에서 이미 fetchUser 호출하므로 여기서는 제거
 
   const handleOpenGift = async (giftId: string) => {
     try {

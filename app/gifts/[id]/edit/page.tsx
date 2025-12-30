@@ -80,7 +80,7 @@ function EditGiftPageContent() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <div>
+      <div className="p-3 mb-2">
         <h1 className="text-3xl font-bold">선물 수정</h1>
         <p className="text-gray-600 mt-1">
           선물 정보를 수정하세요.{' '}

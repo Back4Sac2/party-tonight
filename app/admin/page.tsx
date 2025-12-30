@@ -18,18 +18,17 @@ import { useState } from 'react'
 
 export default function AdminPage() {
   const router = useRouter()
-  const { user, fetchUser } = useUserStore()
+  const { user } = useUserStore()
   const [activeTab, setActiveTab] = useState<'users' | 'gifts'>('users')
   const { data: users = [], isLoading: usersLoading } = useUsers()
   const { data: gifts = [], isLoading: giftsLoading } = useGifts(true)
 
   useEffect(() => {
-    fetchUser().then(() => {
-      if (user?.role !== 'admin') {
-        router.push('/gifts')
-      }
-    })
-  }, [fetchUser, router, user?.role])
+    // UserInitializer에서 이미 fetchUser 호출하므로 user만 확인
+    if (user && user.role !== 'admin') {
+      router.push('/gifts')
+    }
+  }, [user, router])
 
   const loading = activeTab === 'users' ? usersLoading : giftsLoading
 

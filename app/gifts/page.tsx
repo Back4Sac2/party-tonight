@@ -14,13 +14,11 @@ import { useUserStore } from '@/stores'
 import { useGifts, useDeleteGift } from '@/hooks/queries/v2/use-gifts'
 
 export default function GiftsPage() {
-  const { user, fetchUser } = useUserStore()
+  const { user } = useUserStore()
   const { data: gifts = [], isLoading } = useGifts()
   const deleteGiftMutation = useDeleteGift()
 
-  useEffect(() => {
-    fetchUser()
-  }, [fetchUser])
+  // UserInitializer에서 이미 fetchUser 호출하므로 여기서는 제거
 
   const handleDelete = async (giftId: string) => {
     if (!confirm('정말 삭제하시겠습니까?')) return

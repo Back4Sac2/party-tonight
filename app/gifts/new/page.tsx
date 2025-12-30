@@ -50,7 +50,7 @@ export default function NewGiftPage() {
         </p>
       </div>
 
-      <Card>
+      <Card className="p-3 mb-2">
         <CardHeader>
           <CardTitle>선물 정보</CardTitle>
         </CardHeader>

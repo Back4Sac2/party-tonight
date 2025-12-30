@@ -14,7 +14,7 @@ import { GameList } from '@/widgets/game-list/ui/game-list'
 import type { Game } from '@/lib/actions/games'
 
 export default function GamePage() {
-  const { user, fetchUser } = useUserStore()
+  const { user } = useUserStore()
   const { data: games = [], isLoading: gamesLoading } = useGames()
   const { data: users = [], isLoading: usersLoading } = useUsersForSelection()
   const { data: tags = [], isLoading: tagsLoading } = useTags()
@@ -27,9 +27,7 @@ export default function GamePage() {
 
   const loading = gamesLoading || usersLoading || tagsLoading
 
-  useEffect(() => {
-    fetchUser()
-  }, [fetchUser])
+  // UserInitializer에서 이미 fetchUser 호출하므로 여기서는 제거
 
   const canManageGame = (game: Game) => {
     if (!user) return false

@@ -6,14 +6,14 @@ import { useUserStore } from '@/stores'
 
 export default function HomePage() {
   const router = useRouter()
-  const { user, fetchUser } = useUserStore()
+  const { user } = useUserStore()
 
   useEffect(() => {
-    fetchUser()
+    // UserInitializer에서 이미 fetchUser 호출하므로 user만 확인
     if (user) {
       router.replace('/gifts')
     }
-  }, [user, router, fetchUser])
+  }, [user, router])
 
   return (
     <div className="text-center py-12">

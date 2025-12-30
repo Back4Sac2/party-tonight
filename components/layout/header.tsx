@@ -8,11 +8,9 @@ import { useUserStore } from '@/stores'
 
 export function Header() {
   const router = useRouter()
-  const { user, fetchUser, logout } = useUserStore()
+  const { user, logout } = useUserStore()
 
-  useEffect(() => {
-    fetchUser()
-  }, [fetchUser])
+  // UserInitializer에서 이미 fetchUser 호출하므로 여기서는 제거
 
   const handleLogout = async () => {
     await logout()
