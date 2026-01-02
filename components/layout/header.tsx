@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Button, Badge } from '@/shared/ui'
+import { Button } from '@/shared/ui'
 import { useUserStore } from '@/stores'
 
 export function Header() {
@@ -22,58 +22,71 @@ export function Header() {
 
   return (
     <header className="border-b bg-white sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          <Link href="/gifts" className="text-xl font-bold">
-            🎁 Party Tonight
+          <Link href="/gifts" className="text-sm font-semibold text-gray-700">
+            Party Tonight
           </Link>
-          <nav className="flex gap-2 sm:gap-4 items-center">
-            <Link href="/gifts">
-              <Button variant="ghost" size="sm">
-                선물
+          <nav className="flex gap-1.5 sm:gap-2 items-center">
+            <Link href="/gifts" title="선물">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-lg p-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-colors"
+              >
+                🎁
               </Button>
             </Link>
-            <Link href="/game">
-              <Button variant="ghost" size="sm">
-                게임
+            <Link href="/game" title="게임">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-lg p-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-colors"
+              >
+                🎮
               </Button>
             </Link>
-            <Link href="/bag">
-              <Button variant="ghost" size="sm">
-                가방
+            <Link href="/bag" title="가방">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-lg p-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-colors"
+              >
+                🎒
               </Button>
             </Link>
-            <Link href="/gacha">
-              <Button variant="ghost" size="sm">
-                🎲 가챠
+            <Link href="/gacha" title="가챠">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-lg p-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-colors"
+              >
+                🎲
               </Button>
             </Link>
             {isAdmin && (
-              <Link href="/admin">
-                <Button variant="ghost" size="sm" className="text-blue-600">
-                  관리자
+              <Link href="/admin" title="관리자">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-lg p-1.5 border border-blue-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors text-blue-600"
+                >
+                  ⚙️
                 </Button>
               </Link>
             )}
             {user && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 hidden sm:inline">
-                  {user.name}
-                </span>
-                {isAdmin && (
-                  <Badge variant="default" className="bg-blue-600 text-white">
-                    ADMIN
-                  </Badge>
-                )}
-              </div>
+              <span className="text-xs text-gray-500 hidden sm:inline mr-1">
+                {user.name}
+              </span>
             )}
             <Button
               variant="ghost"
               size="sm"
               onClick={handleLogout}
-              className="text-gray-500"
+              className="text-xs text-gray-500 hover:text-gray-700 px-2 py-1"
             >
-              나가기
+              로그아웃
             </Button>
           </nav>
         </div>

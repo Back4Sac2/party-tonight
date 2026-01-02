@@ -7,7 +7,10 @@ import { useGacha } from '@/hooks/queries/v2/use-gacha'
 import { GachaTypeSelect } from '@/features/gacha-type-select/ui/gacha-type-select'
 import { GachaNumberInput } from '@/features/gacha-number-input/ui/gacha-number-input'
 import { GachaResult } from '@/features/gacha-result/ui/gacha-result'
-import type { GachaType, GachaResult as GachaResultType } from '@/lib/actions/gacha'
+import type {
+  GachaType,
+  GachaResult as GachaResultType,
+} from '@/lib/actions/gacha'
 
 export default function GachaPage() {
   const [selectedType, setSelectedType] = useState<GachaType | null>(null)
@@ -108,12 +111,8 @@ export default function GachaPage() {
           </div>
         )}
 
-        <GachaResult
-          result={result}
-          isLoading={gachaMutation.isPending}
-        />
+        <GachaResult result={result} isLoading={gachaMutation.isPending} />
       </div>
     </div>
   )
 }
-

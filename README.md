@@ -58,15 +58,24 @@ party_tonight/
 │       └── footer.tsx
 │
 ├── lib/                          # 유틸리티 및 설정
+│   ├── actions/                 # Server Actions
+│   │   ├── games.ts
+│   │   ├── gifts.ts
+│   │   ├── users.ts
+│   │   └── ...
+│   ├── auth/                    # 인증 관련
+│   │   ├── password.ts
+│   │   ├── permissions.ts
+│   │   └── session.ts
 │   ├── supabase/
 │   │   ├── client.ts            # Supabase 클라이언트
-│   │   └── schema.sql           # 데이터베이스 스키마
-│   ├── session.ts               # 세션 ID 관리
+│   │   ├── server-client.ts     # 서버 사이드 클라이언트
+│   │   └── schema-v2.sql       # 데이터베이스 스키마 (V2)
 │   └── utils.ts                 # 공통 유틸리티
 │
 ├── types/                        # TypeScript 타입 정의
-│   ├── index.ts                 # 도메인 타입
-│   └── database.ts              # Supabase DB 타입
+│   ├── v2.ts                    # V2 도메인 타입
+│   └── database-v2.ts           # Supabase DB 타입 (V2)
 │
 ├── repositories/                 # 데이터 접근 레이어
 │   ├── session.repository.ts
@@ -173,7 +182,7 @@ NEXT_PUBLIC_ACCESS_CODE=your_secret_code_123
 ### 3. Supabase 데이터베이스 설정
 
 1. Supabase 프로젝트 생성
-2. `lib/supabase/schema.sql` 파일의 내용을 Supabase SQL Editor에서 실행
+2. `lib/supabase/schema-v2.sql` 파일의 내용을 Supabase SQL Editor에서 실행
 3. RLS (Row Level Security) 정책이 자동으로 설정됩니다
 
 ### 4. 개발 서버 실행

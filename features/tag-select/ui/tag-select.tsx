@@ -42,6 +42,7 @@ export function TagSelect({
         <div className="flex flex-wrap gap-2">
           {allowEmpty && (
             <Button
+              type="button"
               variant={selectedTag === '' ? 'primary' : 'outline'}
               size="sm"
               onClick={() => onSelect('')}
@@ -57,6 +58,7 @@ export function TagSelect({
           {tags.map(tag => (
             <Button
               key={tag}
+              type="button"
               variant={selectedTag === tag ? 'primary' : 'outline'}
               size="sm"
               onClick={() => onSelect(tag)}

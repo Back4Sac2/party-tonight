@@ -27,12 +27,12 @@ export function GameCard({
   onSelectWinner,
 }: GameCardProps) {
   return (
-    <Card className="transition-shadow hover:shadow-md">
+    <Card className="transition-shadow hover:shadow-md h-full flex flex-col">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <CardTitle>{game.name}</CardTitle>
-            <CardDescription>{game.description}</CardDescription>
+            <CardTitle className="mb-2">{game.name}</CardTitle>
+            <CardDescription className="mb-3">{game.description}</CardDescription>
             {game.tag && (
               <Badge variant="outline" className="mt-2">
                 태그: {game.tag}
@@ -41,7 +41,7 @@ export function GameCard({
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-2">
+      <CardContent className="space-y-3">
         {canManage && (
           <div className="flex gap-2">
             <Button
